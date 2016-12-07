@@ -6,6 +6,14 @@ describe('react package', () => {
   it('should have releases', () => {
     expect(react.releases).toBeDefined();
   });
+
+  const version = '0.200.0';
+  it(`should display versions compatible with atom ${version}`, () => {
+    const filtered = react.filter(version);
+    const keys = Object.keys(filtered.versions);
+    expect(keys.length).toBe(29);
+    expect(keys[0]).toBe('0.16.0');
+  });
 });
 
 describe('package service', () => {
