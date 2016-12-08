@@ -7,7 +7,18 @@ describe('react package', () => {
     expect(react.releases).toBeDefined();
   });
 
-  const version = '0.200.0';
+  const version = '0.200.0', incompatibleVersion = '0.100.0', invalidSemver = '1.0';
+  it(`should be compatible with atom ${version}`, () => {
+    expect(react.compatible(version)).toBeTruthy();
+  });
+  it(`should be incompatible with atom ${incompatibleVersion}`, () => {
+    expect(react.compatible(incompatibleVersion)).toBeFalsy();
+  });
+  it(`should throw an error for an invalid semver ${invalidSemver}`, () => {
+    expect(() => {
+      react.compatible(invalidSemver)
+    }).toThrowError(`Invalid semver ${invalidSemver}`);
+  });
   it(`should display versions compatible with atom ${version}`, () => {
     const filtered = react.filter(version);
     const keys = Object.keys(filtered.versions);
