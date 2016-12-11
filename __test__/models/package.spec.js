@@ -27,6 +27,23 @@ describe('react package', () => {
   });
 });
 
+describe('package searching', () => {
+  const topPackagesCount = 5, nextPackagesStart = 5, topPackages = require('./packages');
+  it(`should find the top ${topPackagesCount} packages`, () => {
+    const top5 = Package.find({limit: topPackagesCount});
+    expect(top5.length).toBe(topPackagesCount);
+    const top5names = top5.map((i) => (i.name));
+    expect(top5name.join(',')).toBe(topPackages.slice(0, topPackagesCount).map(i => (i.name)).join(','));
+  });
+  it(`should find the next ${topPackagesCount} after #${nextPackagesStart}`, () => {
+    const next5 = Package.find({
+      limit: topPackagesCount,
+      offset: nextPackagesStart
+    }).map(i => (i.name));
+    expect(next5.join(',')).toBe(topPackages.slice(nextPackagesStart, nextPackagesStart + topPackagesCount).map(i => (i.name)).join(','));
+  });
+});
+
 describe('package service', () => {
   const registry = 'https://registry.npmjs.org', testPackage = 'whiten', nonExistentPackage = 'kaki';
   fetchMock.get(`${registry}/${testPackage}`, require('./whiten'));
