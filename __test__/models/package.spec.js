@@ -1,4 +1,5 @@
 import fetchMock from 'fetch-mock';
+jest.mock('../../lib/models/repository');
 import Package, {PackageService} from '../../lib/models/package';
 
 describe('react package', () => {
@@ -33,7 +34,7 @@ describe('package searching', () => {
     const top5 = Package.find({limit: topPackagesCount});
     expect(top5.length).toBe(topPackagesCount);
     const top5names = top5.map((i) => (i.name));
-    expect(top5name.join(',')).toBe(topPackages.slice(0, topPackagesCount).map(i => (i.name)).join(','));
+    expect(top5names.join(',')).toBe(topPackages.slice(0, topPackagesCount).map(i => (i.name)).join(','));
   });
   it(`should find the next ${topPackagesCount} after #${nextPackagesStart}`, () => {
     const next5 = Package.find({
