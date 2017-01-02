@@ -43,6 +43,12 @@ describe('package searching', () => {
     }).map(i => (i.name));
     expect(next5.join(',')).toBe(topPackages.slice(nextPackagesStart, nextPackagesStart + topPackagesCount).map(i => (i.name)).join(','));
   });
+  const query = 'minimap';
+  it(`should search for '${query}' package`, () => {
+    const results = Package.find(query);
+    expect(results.length).toBeGreaterThan(0);
+    expect(results[0].name).toBe(query);
+  });
 });
 
 describe('package service', () => {
