@@ -41,4 +41,12 @@ describe('repository', () => {
     const results = Repository.search('angular');
     expect(results.length).toBe(0);
   });
+  it(`search amongst multiple packages`, () => {
+    const packages = require('./packages');
+    packages.forEach(p => {
+      Repository.set(new Package(p))
+    });
+    const results = Repository.search('javascript');
+    expect(results.length).toBe(12);
+  });
 });
