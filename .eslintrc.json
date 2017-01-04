@@ -13,7 +13,6 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react"
     ],
     "rules": {
       "accessor-pairs": "error",
