@@ -28,4 +28,17 @@ describe('repository', () => {
       Repository.set(invalid);
     }).toThrowError(`The given ${typeof invalid} is not ${Package.name}`);
   });
+  it(`search single package`, () => {
+    const react = new Package(require('./single_package'));
+    Repository.set(react);
+    const results = Repository.search(react.name);
+    expect(results.length).toBe(1);
+    expect(results[0].ref).toBe(react.name);
+  });
+  it(`search nonexistent package`, () => {
+    const react = new Package(require('./single_package'));
+    Repository.set(react);
+    const results = Repository.search('angular');
+    expect(results.length).toBe(0);
+  });
 });
