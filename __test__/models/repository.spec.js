@@ -22,4 +22,10 @@ describe('repository', () => {
     expect(Repository.packages.react).toBe(react2);
     expect(Repository.packages.react === react).toBeFalsy();
   });
+  it(`should throw when setting an invalid package`, () => {
+    const invalid = {};
+    expect(() => {
+      Repository.set(invalid);
+    }).toThrowError(`The given ${typeof invalid} is not ${Package.name}`);
+  });
 });
