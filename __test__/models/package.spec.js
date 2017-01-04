@@ -29,6 +29,9 @@ describe('react package', () => {
 });
 
 describe('package searching', () => {
+  it(`should count all available packages`, () => {
+    expect(Package.count).toBe(90);
+  });
   const topPackagesCount = 5, nextPackagesStart = 5, topPackages = require('./packages');
   it(`should find the top ${topPackagesCount} packages`, () => {
     const top5 = Package.find({limit: topPackagesCount});
