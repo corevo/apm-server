@@ -1,3 +1,4 @@
+/* eslint-disable */
 import fetchMock from 'fetch-mock';
 jest.mock('../../lib/models/repository');
 import Package, {PackageService} from '../../lib/models/package';
@@ -25,6 +26,21 @@ describe('react package', () => {
     const keys = Object.keys(filtered.versions);
     expect(keys.length).toBe(29);
     expect(keys[0]).toBe('0.16.0');
+  });
+});
+
+describe('featured packages', () => {
+  it('have no featured packages', () => {
+    expect(Package.featured).toEqual([]);
+  });
+  it('have 5 packages', () => {
+    const topPackages = require('./packages').slice(0, 5);
+    Package.featured = topPackages.map(p => p.name);
+    expect(Package.featured).toEqual(topPackages);
+  });
+  it('should eliminate undefined packages', () => {
+    Package.featured = ['minimap', undefined, 'linter'];
+    expect(Package.featured.length).toBe(2);
   });
 });
 
