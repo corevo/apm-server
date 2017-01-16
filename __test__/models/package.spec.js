@@ -93,7 +93,7 @@ describe('package service', () => {
 
 describe('repository initialization', () => {
   const fetchMock = require('fetch-mock');
-  const registry = process.env.NPM_REPOSITORY;
+  const registry = process.env.NPM_REGISTRY;
   fetchMock.get(`${registry}/-/all`, require('./sinopia_packages'));
   global.repository.resetCounter();
   it(`should initialize the repository`, () => {

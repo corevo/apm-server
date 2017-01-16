@@ -1,2 +1,2 @@
 import 'isomorphic-fetch';
-process.env.NPM_REPOSITORY = 'https://corevo.io';
+process.env.NPM_REGISTRY = 'https://corevo.io';
