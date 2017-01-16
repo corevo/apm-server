@@ -1,3 +1,4 @@
+/* eslint-disable */
 jest.mock('../../lib/models/package');
 import Repository from '../../lib/models/repository';
 import Package from '../../lib/models/package';
@@ -33,7 +34,8 @@ describe('repository', () => {
     Repository.set(react);
     const results = Repository.search(react.name);
     expect(results.length).toBe(1);
-    expect(results[0].ref).toBe(react.name);
+    expect(results[0] instanceof Package).toBeTruthy();
+    expect(results[0].name).toBe(react.name);
   });
   it(`search nonexistent package`, () => {
     const react = new Package(require('./single_package'));
