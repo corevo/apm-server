@@ -1,7 +1,6 @@
 /* eslint-disable */
-import fetchMock from 'fetch-mock';
 jest.mock('../../lib/models/repository');
-import Package, {PackageService} from '../../lib/models/package';
+import Package, {PackageService, InitializeRepository} from '../../lib/models/package';
 
 describe('react package', () => {
   const react = new Package(require('./single_package'));
@@ -71,6 +70,7 @@ describe('package searching', () => {
 });
 
 describe('package service', () => {
+  const fetchMock = require('fetch-mock');
   const registry = 'https://registry.npmjs.org', testPackage = 'whiten', nonExistentPackage = 'kaki';
   fetchMock.get(`${registry}/${testPackage}`, require('./whiten'));
   fetchMock.get(`${registry}/${nonExistentPackage}`, {
@@ -89,7 +89,21 @@ describe('package service', () => {
       expect(err.message).toBeDefined();
     });
   });
-  afterAll(() => {
-    fetchMock.restore();
+});
+
+describe('repository initialization', () => {
+  const fetchMock = require('fetch-mock');
+  const registry = process.env.NPM_REPOSITORY;
+  fetchMock.get(`${registry}/-/all`, require('./sinopia_packages'));
+  global.repository.resetCounter();
+  it(`should initialize the repository`, () => {
+    expect(global.repository.count).toBe(0);
+    return InitializeRepository().then(() => {
+      expect(global.repository.count).toBe(5);
+    });
   });
+});
+
+afterAll(() => {
+  fetchMock.restore();
 });
