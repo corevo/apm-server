@@ -3,7 +3,7 @@ jest.mock('../../lib/models/repository');
 import Package, {PackageService, InitializeRepository} from '../../lib/models/package';
 
 describe('react package', () => {
-  const react = new Package(require('./single_package'));
+  const react = new Package(require('./single_package.recording'));
   it('should have releases', () => {
     expect(react.releases).toBeDefined();
   });
@@ -33,7 +33,7 @@ describe('featured packages', () => {
     expect(Package.featured).toEqual([]);
   });
   it('have 5 packages', () => {
-    const topPackages = require('./packages').slice(0, 5);
+    const topPackages = require('./packages.recording').slice(0, 5);
     Package.featured = topPackages.map(p => p.name);
     expect(Package.featured).toEqual(topPackages);
   });
@@ -47,7 +47,7 @@ describe('package searching', () => {
   it(`should count all available packages`, () => {
     expect(Package.count).toBe(90);
   });
-  const topPackagesCount = 5, nextPackagesStart = 5, topPackages = require('./packages');
+  const topPackagesCount = 5, nextPackagesStart = 5, topPackages = require('./packages.recording');
   it(`should find the top ${topPackagesCount} packages`, () => {
     const top5 = Package.find({limit: topPackagesCount});
     expect(top5.length).toBe(topPackagesCount);
@@ -72,7 +72,7 @@ describe('package searching', () => {
 describe('package service', () => {
   const fetchMock = require('fetch-mock');
   const registry = 'https://registry.npmjs.org', testPackage = 'whiten', nonExistentPackage = 'kaki';
-  fetchMock.get(`${registry}/${testPackage}`, require('./whiten'));
+  fetchMock.get(`${registry}/${testPackage}`, require('./whiten.recording'));
   fetchMock.get(`${registry}/${nonExistentPackage}`, {
     body: {},
     status: 404
@@ -94,7 +94,7 @@ describe('package service', () => {
 describe('repository initialization', () => {
   const fetchMock = require('fetch-mock');
   const registry = process.env.NPM_REGISTRY;
-  fetchMock.get(`${registry}/-/all`, require('./sinopia_packages'));
+  fetchMock.get(`${registry}/-/all`, require('./sinopia_packages.recording'));
   global.repository.resetCounter();
   it(`should initialize the repository`, () => {
     expect(global.repository.count).toBe(0);
